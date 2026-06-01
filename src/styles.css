@@ -30,8 +30,56 @@ body {
 .app {
   display: grid;
   grid-template-columns: 380px 1fr;
+  height: 100%;
+  width: 100vw;
+}
+
+/* ---------- mode switch (top bar) ---------- */
+.app-shell {
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--line);
+  flex: 0 0 auto;
+}
+
+.mode-switch {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.mode-btn {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  background: #fff;
+  color: var(--muted);
+  border: none;
+  border-right: 2px solid var(--line);
+  padding: 9px 18px;
+  cursor: pointer;
+}
+
+.mode-btn:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.mode-btn.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.app-shell > .app {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 /* ---------- left panel ---------- */
@@ -493,4 +541,353 @@ body {
   .react-flow__node {
     animation: none !important;
   }
+}
+
+/* ---------- project mode ---------- */
+.src-tabs {
+  display: flex;
+  gap: 0;
+  border: 2px solid var(--ink);
+}
+
+.src-tab {
+  flex: 1;
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  background: #fff;
+  color: var(--muted);
+  border: none;
+  border-right: 2px solid var(--ink);
+  padding: 7px 4px;
+  cursor: pointer;
+}
+
+.src-tab:last-child {
+  border-right: none;
+}
+
+.src-tab:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.src-tab.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.src-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gh-input {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--soft);
+  border: 2px solid var(--line);
+  color: var(--ink);
+  padding: 9px 10px;
+  outline: none;
+}
+
+.gh-input:focus {
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.src-note {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.dropzone {
+  border: 2px dashed var(--ink);
+  background: var(--soft);
+  padding: 26px 14px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.14s ease;
+}
+
+.dropzone:hover {
+  background: #fff;
+}
+
+.dz-mark {
+  width: 16px;
+  height: 16px;
+  background: var(--ink);
+  display: inline-block;
+  animation: dotpulse 1.4s ease-in-out infinite;
+}
+
+.paste-area {
+  min-height: 180px;
+  flex: 0 0 auto;
+}
+
+.status-line {
+  font-family: var(--pixel);
+  font-size: 9px;
+  color: var(--ink);
+  border-left: 3px solid var(--ink);
+  padding: 6px 9px;
+  background: var(--soft);
+  animation: blink 1.6s steps(2, start) infinite;
+}
+
+/* file list */
+.file-list {
+  border: 2px solid var(--line);
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+.file-list-head {
+  font-family: var(--pixel);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  padding: 7px 10px;
+  border-bottom: 1px solid #e3e3e3;
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #ededed;
+  padding: 6px 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+}
+
+.file-row:hover {
+  background: var(--soft);
+}
+
+.file-row.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.file-swatch {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  text-align: left;
+}
+
+.file-count {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* node file badge */
+.cn-file {
+  color: var(--muted);
+  font-size: 7px;
+}
+
+/* cross-file edges: emphasized marching ants */
+.edge-cross .react-flow__edge-path {
+  stroke-dasharray: 10 4;
+  animation: dash-call 0.5s linear infinite;
+}
+
+
+/* ===========================================================================
+   language switch (top bar, right)
+   =========================================================================== */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 0;
+}
+.lang-btn {
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  background: #fff;
+  color: var(--muted);
+  border: 2px solid var(--line);
+  border-right-width: 0;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+.lang-btn:last-child { border-right-width: 2px; }
+.lang-btn:hover { background: var(--soft); color: var(--ink); }
+.lang-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ===========================================================================
+   level switch (FOLDERS / FILES / SYMBOLS)
+   =========================================================================== */
+.level-switch {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.level-label {
+  font-family: var(--pixel);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.level-tabs { display: flex; }
+.level-tab {
+  flex: 1 1 0;
+  font-family: var(--pixel);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  background: #fff;
+  color: var(--muted);
+  border: 2px solid var(--ink);
+  border-right-width: 0;
+  padding: 7px 4px;
+  cursor: pointer;
+}
+.level-tab:last-child { border-right-width: 2px; }
+.level-tab:hover:not(:disabled) { background: var(--soft); color: var(--ink); }
+.level-tab.active { background: var(--ink); color: #fff; }
+.level-tab:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* scope / breadcrumb bar */
+.scope-bar {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.scope-path {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn.tiny { padding: 4px 8px; font-size: 8px; }
+
+/* render-cap banner */
+.cap-banner {
+  margin-top: 10px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+  background: #fff5d6;
+  border: 2px solid #e3c34d;
+  padding: 7px 9px;
+}
+
+/* drill hint floating on canvas */
+.drill-tip {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  font-family: var(--pixel);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ===========================================================================
+   level node (folder / file overview)
+   =========================================================================== */
+.level-node {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px;
+  position: relative;
+  transition: box-shadow 0.14s ease, transform 0.14s ease;
+}
+.react-flow__node:hover .level-node {
+  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.level-node.is-folder { background: #fafafa; }
+.ln-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.ln-kind {
+  font-family: var(--pixel);
+  font-size: 7px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+.ln-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ln-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.ln-weight {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ln-deg {
+  display: flex;
+  gap: 5px;
+  font-family: var(--pixel);
+  font-size: 7px;
+  color: var(--muted);
+}
+
+/* ===========================================================================
+   dotted canvas texture (guaranteed, independent of react-flow Background)
+   =========================================================================== */
+.canvas.dotted {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, #d2d2d2 1.4px, transparent 1.4px);
+  background-size: 20px 20px;
+  background-position: -10px -10px;
 }

@@ -28,11 +28,22 @@ export interface GraphEdge {
   kind: EdgeKind;
 }
 
+/** A symbol imported into a file: the local binding name + the module it came from. */
+export interface ImportRef {
+  local: string; // local binding name used in this file
+  imported?: string; // original exported name (for named imports); undefined = default/namespace
+  source: string; // raw module specifier, e.g. "./api" or "react"
+}
+
 export interface AnalysisResult {
   nodes: GraphNode[];
   edges: GraphEdge[];
   error?: string;
   lang: Lang;
+  /** Symbols this file pulls in from other modules (for cross-file resolution). */
+  imports?: ImportRef[];
+  /** Top-level symbol names this file exposes (best-effort, for cross-file resolution). */
+  exports?: string[];
 }
 
 export type Lang =
@@ -282,6 +293,8 @@ function analyzeJS(code: string, lang: Lang): AnalysisResult {
 
   const b = new Builder();
   const fnNodeToId = new Map<any, string>();
+  const imports: ImportRef[] = [];
+  const exportNames = new Set<string>();
 
   walk(ast.program, (n) => {
     switch (n.type) {
@@ -337,8 +350,18 @@ function analyzeJS(code: string, lang: Lang): AnalysisResult {
         }
         break;
       case "ImportDeclaration":
-        for (const spec of n.specifiers ?? [])
-          if (spec.local?.name) b.addNode(spec.local.name, "import", n.source?.value ?? "");
+        for (const spec of n.specifiers ?? []) {
+          if (spec.local?.name) {
+            b.addNode(spec.local.name, "import", n.source?.value ?? "");
+            const imported =
+              spec.type === "ImportSpecifier"
+                ? spec.imported?.name ?? spec.local.name
+                : spec.type === "ImportDefaultSpecifier"
+                ? "default"
+                : undefined; // namespace import
+            imports.push({ local: spec.local.name, imported, source: n.source?.value ?? "" });
+          }
+        }
         break;
     }
   });
@@ -394,7 +417,29 @@ function analyzeJS(code: string, lang: Lang): AnalysisResult {
   };
   visit(ast.program);
 
-  return b.result(lang);
+  // collect exported top-level names (best-effort) for cross-file resolution
+  for (const stmt of ast.program.body ?? []) {
+    if (stmt.type === "ExportNamedDeclaration") {
+      const d = stmt.declaration;
+      if (d?.type === "FunctionDeclaration" && d.id?.name) exportNames.add(d.id.name);
+      else if (d?.type === "ClassDeclaration" && d.id?.name) exportNames.add(d.id.name);
+      else if (d?.type === "VariableDeclaration")
+        for (const decl of d.declarations ?? [])
+          if (decl.id?.type === "Identifier") exportNames.add(decl.id.name);
+      for (const spec of stmt.specifiers ?? [])
+        if (spec.exported?.name) exportNames.add(spec.exported.name);
+    } else if (stmt.type === "ExportDefaultDeclaration") {
+      const d = stmt.declaration;
+      const nm = d?.id?.name ?? (d?.type === "Identifier" ? d.name : null);
+      exportNames.add(nm ?? "default");
+      if (nm) exportNames.add("default");
+    }
+  }
+
+  const res = b.result(lang);
+  res.imports = imports;
+  res.exports = [...exportNames];
+  return res;
 }
 
 // ===========================================================================
