@@ -20,6 +20,7 @@ import { SAMPLES } from "./samples";
 import CodeNode from "./components/CodeNode";
 
 const nodeTypes = { code: CodeNode };
+const coffeeImageSrc = `${import.meta.env.BASE_URL}assets/buy-me-a-coffee.png`;
 
 export default function App() {
   const [lang, setLang] = useState<Lang>("auto");
@@ -169,7 +170,7 @@ export default function App() {
             rel="noreferrer"
             aria-label="Buy Me a Coffee"
           >
-            <img src="/assets/buy-me-a-coffee.png" alt="Buy Me a Coffee" />
+              <img src={coffeeImageSrc} alt="Buy Me a Coffee" />
           </a>
           <span>KLICK = Nachbarn hervorheben · single-file · {LANGUAGES.length - 1} Sprachen</span>
         </footer>
