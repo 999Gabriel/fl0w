@@ -162,7 +162,16 @@ export default function App() {
         </div>
 
         <footer className="foot">
-          KLICK = Nachbarn hervorheben · single-file · {LANGUAGES.length - 1} Sprachen
+          <a
+            className="coffee-link"
+            href="https://buymeacoffee.com/the999gabriel"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Buy Me a Coffee"
+          >
+            <img src="/assets/buy-me-a-coffee.png" alt="Buy Me a Coffee" />
+          </a>
+          <span>KLICK = Nachbarn hervorheben · single-file · {LANGUAGES.length - 1} Sprachen</span>
         </footer>
       </aside>
 

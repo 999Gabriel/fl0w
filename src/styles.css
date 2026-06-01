@@ -256,6 +256,22 @@ body {
   line-height: 1.5;
   padding-top: 8px;
   border-top: 1px solid #e3e3e3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.coffee-link {
+  display: inline-flex;
+  width: min(178px, 100%);
+  line-height: 0;
+}
+
+.coffee-link img {
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+  display: block;
 }
 
 /* ---------- canvas ---------- */

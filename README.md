@@ -1,5 +1,5 @@
 # fl0w
-<img width="283" height="98" alt="Screenshot 2026-06-01 at 18 53 07" src="https://github.com/user-attachments/assets/c21bd579-a8e8-4474-a610-9a1fbc34a2f4" />
+<img width="283" height="98" alt="fl0w logo" src="public/assets/fl0w-logo.png" />
 
 **Paste a source file — see how it actually fits together.**
 
