@@ -1,8 +1,8 @@
-# Flow
+# fl0w
 
 **Paste a source file — see how it actually fits together.**
 
-Flow is a single-page web app that parses one file of code and draws an interactive graph of it: which function calls which (solid, flowing edges) and which data / state flows where (dashed edges). Minimalist black-and-white, pixel-terminal aesthetic, no build step or backend — everything runs in your browser.
+fl0w is a single-page web app that parses one file of code and draws an interactive graph of it: which function calls which (solid, flowing edges) and which data / state flows where (dashed edges). Minimalist black-and-white, pixel-terminal aesthetic, no build step or backend — everything runs in your browser.
 
 🔗 **Live:** https://999gabriel.github.io/flow/
 

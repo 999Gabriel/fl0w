@@ -88,7 +88,7 @@ export default function App() {
         <header className="brand">
           <span className="brand-mark" />
           <h1>
-            FLOW<span className="caret">_</span>
+            fl0w<span className="caret">_</span>
           </h1>
         </header>
         <p className="hint">
