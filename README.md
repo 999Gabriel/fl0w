@@ -4,7 +4,7 @@
 
 fl0w is a single-page web app that parses one file of code and draws an interactive graph of it: which function calls which (solid, flowing edges) and which data / state flows where (dashed edges). Minimalist black-and-white, pixel-terminal aesthetic, no build step or backend — everything runs in your browser.
 
-🔗 **Live:** https://999gabriel.github.io/flow/
+🔗 **Live:** https://999gabriel.github.io/fl0w/
 
 ## Features
 
@@ -56,7 +56,7 @@ npm run preview    # serve the production build
 
 ## Deployment
 
-Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the app and publishes `dist/` to GitHub Pages. The Vite `base` is set to `/flow/` for the build so asset paths resolve under the project page.
+Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the app and publishes `dist/` to GitHub Pages. The Vite `base` is set to `/fl0w/` for the build so asset paths resolve under the project page.
 
 ## Known limits (single-file by design)
 

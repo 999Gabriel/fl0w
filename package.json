@@ -2,7 +2,7 @@
   "name": "fl0w",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://999gabriel.github.io/flow/",
+  "homepage": "https://999gabriel.github.io/fl0w/",
   "type": "module",
   "scripts": {
     "dev": "vite",
