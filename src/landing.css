@@ -1,0 +1,528 @@
+/* ===========================================================================
+   landing.css — layout for the landing page only.
+   Reuses the app's design tokens and primitives from styles.css (imported
+   first): --ink/--bg/--soft/--muted/--pixel/--mono, .code-node, .btn, .brand,
+   .caret, .scanline, .cn-* . Everything here is lp- prefixed layout glue.
+   Monochrome, hard 2px borders, no border-radius, no gradients.
+   =========================================================================== */
+
+.lp {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ---- top bar: brand + language toggle (mirrors the app's .topbar) ---- */
+.lp-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 2px solid var(--line);
+}
+
+.lang-switch {
+  display: flex;
+}
+
+.lang-btn {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  background: #fff;
+  color: var(--muted);
+  border: 2px solid var(--line);
+  border-left-width: 0;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+
+.lang-switch .lang-btn:first-child {
+  border-left-width: 2px;
+}
+
+.lang-btn:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.lang-btn.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- main column ---- */
+.lp-main {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 56px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* ---- hero: text left, mini-graph right ---- */
+.lp-hero {
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 40px;
+  align-items: center;
+}
+
+.lp-tagline {
+  font-family: var(--pixel);
+  font-size: 26px;
+  line-height: 1.35;
+  letter-spacing: 0.5px;
+  margin: 0 0 18px;
+}
+
+.lp-lede {
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0 0 26px;
+  max-width: 44ch;
+}
+
+.lp-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* slightly larger launch button than the app's default .btn */
+.lp-launch,
+.lp-cta .btn {
+  font-size: 11px;
+  padding: 11px 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---- mini call-graph (static, built from .code-node) ---- */
+.lp-graph {
+  position: relative;
+  height: 240px;
+  width: 100%;
+}
+
+.lp-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lp-edge {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.lp-edge-call {
+  stroke-dasharray: 9 5;
+  animation: dash-call 0.6s linear infinite;
+}
+
+.lp-edge-uses {
+  stroke-dasharray: 2 6;
+  opacity: 0.5;
+  animation: dash-uses 1s linear infinite;
+}
+
+.lp-node-wrap {
+  position: absolute;
+  /* nodes build in one after another, mirroring the app's live typing pop-in */
+  animation: nodeIn 0.42s ease backwards;
+}
+
+/* edges fade in as a group once the first nodes have started appearing */
+.lp-edge-group {
+  animation: lpEdgeIn 0.5s ease 0.55s backwards;
+}
+
+@keyframes lpEdgeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* slightly narrower than the real 190px node so four ranks fit the 520px stage */
+.lp-node {
+  width: 168px;
+}
+
+.lp-pos-a {
+  left: 0;
+  top: 100px;
+}
+
+.lp-pos-b {
+  left: 176px;
+  top: 40px;
+}
+
+.lp-pos-c {
+  left: 352px;
+  top: 100px;
+}
+
+.lp-pos-d {
+  left: 176px;
+  top: 168px;
+}
+
+/* ---- feature grid: four nuts-and-bolts cards, hard bordered ---- */
+.lp-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 2px solid var(--line);
+}
+
+.lp-feature {
+  padding: 18px 18px;
+  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+}
+
+/* right column: drop the right border */
+.lp-feature:nth-child(2n) {
+  border-right: none;
+}
+
+/* bottom row: drop the bottom border */
+.lp-feature:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.lp-feature-t {
+  font-family: var(--pixel);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.lp-feature-d {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---- shared section heading (pixel, muted) ---- */
+.lp-section-head {
+  font-family: var(--pixel);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* ---- stat band: four hard-bordered cells, big pixel numbers ---- */
+.lp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid var(--line);
+}
+
+.lp-stat {
+  padding: 20px 16px;
+  border-right: 2px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.lp-stat:last-child {
+  border-right: none;
+}
+
+.lp-stat-n {
+  font-family: var(--pixel);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.lp-stat-l {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---- language chips ---- */
+.lp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lp-chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 6px 11px;
+  border: 2px solid var(--line);
+  background: #fff;
+  cursor: default;
+  transition: background 0.12s, color 0.12s;
+}
+
+.lp-chip:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- legend: node palette + edge meanings ---- */
+.lp-legend-lede {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.lp-legend-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 2px solid var(--line);
+  margin-bottom: 16px;
+}
+
+.lp-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 14px;
+  border-right: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+}
+
+/* 4-col grid: clear the right edge on the last column, bottom on the last row */
+.lp-legend-item:nth-child(4n) {
+  border-right: none;
+}
+
+.lp-legend-item:nth-last-child(-n + 4) {
+  border-bottom: none;
+}
+
+.lp-swatch {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  /* hard square, matching the app's pixel dots */
+}
+
+.lp-legend-label {
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+
+.lp-edge-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lp-edge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lp-edge-sample {
+  width: 60px;
+  height: 12px;
+  flex: 0 0 auto;
+}
+
+.lp-edge-name {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  min-width: 64px;
+}
+
+.lp-edge-desc {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ---- how it reads: numbered spec list ---- */
+
+.lp-how-list {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lp-how-list li {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ---- closing call-to-action band ---- */
+.lp-final {
+  border: 2px solid var(--line);
+  background: var(--ink);
+  color: #fff;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.lp-final-t {
+  font-family: var(--pixel);
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.lp-final-d {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #cfcfcf;
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* invert the launch button so it reads on the dark band */
+.lp-final .lp-launch {
+  margin-top: 6px;
+  background: #fff;
+  color: var(--ink);
+  border-color: #fff;
+}
+
+.lp-final .lp-launch:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- footer ---- */
+.lp-foot {
+  flex: 0 0 auto;
+  border-top: 2px solid var(--line);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.lp-foot-links {
+  display: flex;
+  gap: 18px;
+}
+
+.lp-foot-links a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 1px;
+}
+
+.lp-foot-links a:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- responsive: stack on narrow screens ---- */
+@media (max-width: 880px) {
+  .lp-hero {
+    grid-template-columns: 1fr;
+  }
+  .lp-graph {
+    height: 240px;
+    max-width: 520px;
+  }
+  .lp-tagline {
+    font-size: 22px;
+  }
+  /* legend collapses to two columns on tablets */
+  .lp-legend-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .lp-legend-item:nth-child(4n) {
+    border-right: 2px solid var(--line);
+  }
+  .lp-legend-item:nth-child(2n) {
+    border-right: none;
+  }
+  .lp-legend-item:nth-last-child(-n + 4) {
+    border-bottom: 2px solid var(--line);
+  }
+  .lp-legend-item:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .lp-features {
+    grid-template-columns: 1fr;
+  }
+  .lp-feature {
+    border-right: none;
+  }
+  .lp-feature:nth-child(2n) {
+    border-right: none;
+  }
+  /* with one column, only the very last card drops its bottom border */
+  .lp-feature:nth-last-child(-n + 2) {
+    border-bottom: 2px solid var(--line);
+  }
+  .lp-feature:last-child {
+    border-bottom: none;
+  }
+  /* stat band: 2x2 instead of a single cramped row */
+  .lp-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .lp-stat:nth-child(2n) {
+    border-right: none;
+  }
+  .lp-stat:nth-child(-n + 2) {
+    border-bottom: 2px solid var(--line);
+  }
+  .lp-foot {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-edge-call,
+  .lp-edge-uses,
+  .lp-node-wrap,
+  .lp-edge-group {
+    animation: none !important;
+  }
+}
